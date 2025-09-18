@@ -2,7 +2,8 @@ import React, { useEffect, useCallback } from "react";
 import { Container, Paper, Typography, Grid, TextField, Box } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import CampaignTable from "../../components/CampaignTable";
-import { fetchCampaigns, addCampaigns, setSearch, setDateRange } from "./campaignsSlice";
+import { fetchCampaigns, addCampaign, setSearch, setDateRange } from "./campaignsSlice";
+import AddCampaignForm from "../../components/AddCampaignForm";
 
 export default function CampaignList() {
   const dispatch = useDispatch();
@@ -15,17 +16,35 @@ export default function CampaignList() {
 
   // expose AddCampaigns globally for testing as required
   useEffect(() => {
-    window.AddCampaigns = (arr) => {
+    const fn = (payload) => {
       try {
-        if (!Array.isArray(arr)) throw new Error("AddCampaigns expects an array");
-        dispatch(addCampaigns(arr));
+        if (!payload) return false;
+        const items = Array.isArray(payload) ? payload : [payload];
+        items.forEach(item => {
+          if (item && typeof item === "object" && !Array.isArray(item)) {
+            const normalized = {
+              id: Number(item.id),
+              name: item.name ?? item.title ?? "",
+              startDate: item.startDate ?? item.start ?? "",
+              endDate: item.endDate ?? item.end ?? "",
+              Budget: item.Budget != null ? Number(item.Budget) : (item.budget != null ? Number(item.budget) : 0),
+              userId: item.userId != null ? Number(item.userId) : (item.userId === null ? null : undefined)
+            };
+            dispatch(addCampaign(normalized));
+          }
+        });
         return true;
       } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error("AddCampaigns error:", e);
         return false;
       }
     };
+  
+    // attach
+    window.AddCampaigns = fn;
+  
     return () => {
-      // cleanup
       try { delete window.AddCampaigns; } catch (e) {}
     };
   }, [dispatch]);
@@ -90,6 +109,8 @@ export default function CampaignList() {
             </Grid>
           </Grid>
         </Box>
+
+        <AddCampaignForm />
 
         <Box sx={{ mb: 2 }}>
           {loadingUsers ? (

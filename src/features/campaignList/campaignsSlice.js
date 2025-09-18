@@ -41,6 +41,7 @@ const campaignSlice = createSlice({
   },
   reducers: {
     addCampaign: (state, action) => {
+      console.log(action.payload)
       state.data.push(action.payload);
     },
     updateCampaign: (state, action) => {
@@ -84,6 +85,6 @@ const campaignSlice = createSlice({
   },
 });
 
-export const { addCampaigns, setDateRange, setSearch } = campaignSlice.actions;
+export const { addCampaign, setDateRange, setSearch } = campaignSlice.actions;
 
 export default campaignSlice.reducer;
