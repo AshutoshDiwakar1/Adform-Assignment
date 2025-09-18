@@ -14,7 +14,7 @@ export default function CampaignList() {
     dispatch(fetchCampaigns());
   }, [dispatch]);
 
-  // expose AddCampaigns globally for testing as required
+ //add campaigns function to window
   useEffect(() => {
     const fn = (payload) => {
       try {
