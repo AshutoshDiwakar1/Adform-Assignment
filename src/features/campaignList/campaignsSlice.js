@@ -41,6 +41,8 @@ const campaignSlice = createSlice({
     data: initialCampaigns,
     loading: false,
     error: null,
+    search: "",
+    dateRange: { start: null, end: null }
   },
   reducers: {
     addCampaign: (state, action) => {
@@ -59,6 +61,12 @@ const campaignSlice = createSlice({
         (campaign) => campaign.id !== action.payload
       );
     },
+    setSearch(state, action) {
+      state.search = action.payload;
+    },
+    setDateRange(state, action) {
+      state.dateRange = action.payload;
+    }
   },
 
   extraReducers: (builder) => {
