@@ -1,7 +1,8 @@
 import React, { useEffect, useCallback } from "react";
 import { Container, Paper, Typography, Grid, TextField, Box } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUsers, addCampaigns, setSearch, setDateRange } from "./campaignsSlice";
+import CampaignTable from "../../components/CampaignTable";
+import { fetchCampaigns, addCampaigns, setSearch, setDateRange } from "./campaignsSlice";
 
 export default function CampaignList() {
   const dispatch = useDispatch();
@@ -9,7 +10,7 @@ export default function CampaignList() {
 
   // fetch users once
   useEffect(() => {
-    dispatch(fetchUsers());
+    dispatch(fetchCampaigns());
   }, [dispatch]);
 
   // expose AddCampaigns globally for testing as required
@@ -95,7 +96,7 @@ export default function CampaignList() {
             <Typography>Loading users...</Typography>
           ) : errorUsers ? (
             <Typography color="error">{errorUsers}</Typography>
-          ) : null}
+          ) :  <CampaignTable />}
         </Box>
 
         <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
