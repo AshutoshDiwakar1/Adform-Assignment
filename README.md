@@ -1,12 +1,50 @@
-# React + Vite
+# Adform Frontend Assignment – Campaign Manager
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple React + Redux Toolkit application that displays a list of campaigns, allows filtering by name and date range, and supports adding new campaigns interactively.
 
-Currently, two official plugins are available:
+Built with **React 18, Redux Toolkit, Material-UI (MUI)**, and tested with **Jest + React Testing Library**.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- 📋 **Campaign Table** showing:
+
+  - Campaign Name
+  - Start & End Dates
+  - Active status (green/red based on current date)
+  - Budget (formatted in USD)
+  - Associated User name (resolved from external API, or `Unknown User`)
+
+- **Search campaigns** by name (instant filtering).
+- **Filter campaigns** by start and end date with validation (end ≥ start).
+- **Add new campaigns** via a modal form with validation.
+- **Global function** `window.AddCampaigns([...])` available in browser console to append new campaigns dynamically.
+- **User data fetched** from [JSONPlaceholder Users API](https://jsonplaceholder.typicode.com/users) (via Redux Thunk).
+- **Loading & error handling** states for API calls.
+- **Unit & integration tests** with Jest.
+
+## 🚀 Getting Started
+
+### 1. Clone the repo
+
+```bash
+git clone https://github.com/YOUR_USERNAME/adform-assignment.git
+cd adform-assignment
+
+2. Install dependencies
+npm install
+
+3. Run the app
+npm run dev
+
+
+4. Run all tests:
+npm run test
+
+
+Tests include:
+Reducer unit test (campaignsSlice)
+Integration test (open modal, add campaign, verify in table)
+
+```
